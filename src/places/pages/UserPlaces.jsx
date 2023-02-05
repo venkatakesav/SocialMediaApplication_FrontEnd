@@ -30,8 +30,10 @@ const DUMMY_PLACES = [
 ];
 
 const UserPlaces = () => {
+    const userId = useParams().userId;
+    const loadedPlaces = DUMMY_PLACES.filter(place => place.creator === userId);
     return <div>
-        <PlaceList items={DUMMY_PLACES} />
+        <PlaceList items={loadedPlaces} />
     </div>;
 }
 
