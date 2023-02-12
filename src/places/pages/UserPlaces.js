@@ -16,6 +16,7 @@ const UserPlaces = () => {
   const [loadedPlaces, setLoadedPlaces] = useState();
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [searchPlace, setSearchPlace] = useState();
+  const [searchTags, setSearchTags] = useState();
 
   const userId = useParams().userId;
 
@@ -34,15 +35,31 @@ const UserPlaces = () => {
     console.log(searchPlace)
   }
 
-  console.log()
+  const searchTagsHandler = event => {
+    setSearchTags(event.target.value)
+    console.log(searchTags)  
+  }
+
+  const[finalTags, setFinalTags] = useState();
+  const setFinalTags_1 = () => {
+    setFinalTags(searchTags.split(','))
+    console.log(finalTags)
+  }
+
+  // console.log()
 
   return <React.Fragment>
     <ErrorModal error={error} onClear={clearError} />
     {isLoading && <div className='center'><LoadingSpinner></LoadingSpinner></div>}
-    <div><input type="text" 
+    <div><input type="text"
       value={searchPlace} onChange={searchPlaceHandler}
-    ></input><Button type="submit">Search</Button></div>
-    {!isLoading && loadedPlaces && <PlaceList items={loadedPlaces} searchVal={searchPlace}/>}
+    ></input><Button type="submit">Search Name</Button></div>
+    <div><input type="text" onChange={searchTagsHandler}></input><Button type="submit" onClick={setFinalTags_1}>Search Tags!!</Button></div>
+    <div className='InLine'><Button inverse>Ascending</Button>
+      <Button inverse>Followers</Button>
+      <Button inverse>Descending</Button>
+      <Button inverse>Creation Date</Button></div>
+    {!isLoading && loadedPlaces && <PlaceList items={loadedPlaces} searchVal={searchPlace} searchTags={finalTags}/>}
   </React.Fragment>;
 };
 

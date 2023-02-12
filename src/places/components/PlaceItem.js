@@ -37,9 +37,11 @@ const PlaceItem = props => {
     }
   }
 
+  const [isTag, setIsTag] = useState(false);
+
   return (
     <>
-      {(props.title == props.searchVal || !props.searchVal) && <React.Fragment>
+      {(!props.searchTags || props.tags.includes(props.searchTags)) &&(props.title == props.searchVal || !props.searchVal) && <React.Fragment>
         <ErrorModal error={error} onClear={clearError} />
         <Modal
           show={showMap}

@@ -32,6 +32,7 @@ const PlaceList = props => {
           tags={place.tags}
           bannedKeyWords={place.bannedKeyWords}
           searchVal = {props.searchVal}
+          searchTags = {props.searchTags}
         />
       ))}
     </ul>
