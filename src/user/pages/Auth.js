@@ -56,10 +56,12 @@ function Auth() {
                     JSON.stringify({
                         name: formState.inputs.name.value,
                         email: formState.inputs.email.value,
-                        password: formState.inputs.password.value
-                    }, {
+                        password: formState.inputs.password.value,
+                        age: formState.inputs.age.value,
+                        contact: formState.inputs.contact.value
+                    }), {
                         'Content-Type': 'application/json'
-                    })
+                    }
                 );
                 auth.login(response.user.id)
             } catch (err) {
@@ -98,12 +100,17 @@ function Auth() {
                 <form onSubmit={authSubmitHandler}>
                     {!isLoginMode && <Input element="input" id="name" type="text" label="Name" validators={[VALIDATOR_REQUIRE()]}
                         errorText="Don't You Have a Name ;)" onInput={inputHandler}></Input>}
-                    <Input element="input" id="email" type="email" label="email"
+                    <Input element="input" id="email" type="email" label="Email"
                         validators={[VALIDATOR_EMAIL()]} errorText="Please enter a valid email address"
                         onInput={inputHandler} ></Input>
-                    <Input element="input" id="password" type="password" label="password"
+                    <Input element="input" id="password" type="password" label="Password"
                         validators={[VALIDATOR_MINLENGTH(5)]} errorText="Please enter a valid Password (At least 5 Characters)"
                         onInput={inputHandler} ></Input>
+                    {!isLoginMode && <Input element="input" id="age" label="Age" type="text" validators={[VALIDATOR_MINLENGTH(1)]} errorText="Please enter a valid Age"
+                        onInput={inputHandler} ></Input>}
+                    {!isLoginMode && <Input element="input" id="contact" type="text" label="Contact"
+                        validators={[VALIDATOR_MINLENGTH(10)]} errorText="Please enter a valid Contact Phone Number"
+                        onInput={inputHandler} ></Input>}
                     <Button type="submit" disabled={!formState.isValid}>{isLoginMode ? 'LOGIN' : 'SIGNUP'}</Button>
                 </form>
                 <Button inverse onClick={switchModeHandler}>SWITCH TO {isLoginMode ? 'SIGNUP' : 'LOGIN'}</Button>

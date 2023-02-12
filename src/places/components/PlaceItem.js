@@ -70,12 +70,16 @@ const PlaceItem = props => {
           <div className="place-item__info">
             <h2>{props.title}</h2>
             <h3>{props.address}</h3>
+            <h3>Tags: {props.tags}</h3>
+            <h3>Banned Words: {props.bannedKeyWords}</h3>
             <p>{props.description}</p>
           </div>
           <div className="place-item__actions">
-            <Button inverse onClick={openMapHandler}>VIEW ON MAP</Button>
-            {auth.isLoggedIn && <Button to={`/places/${props.id}`}>EDIT</Button>}
-            {auth.isLoggedIn && <Button danger onClick={showDeleteWarningHandler}>DELETE</Button>}
+            <Button inverse onClick={openMapHandler}>NAVIGATE TO SUBREDDIT PAGE</Button>
+            {console.log(auth.userId)}
+            {console.log(props.creator)}
+            {auth.userId == props.creatorId && auth.isLoggedIn && <Button to={`/places/${props.id}`}>EDIT</Button>}
+            {auth.userId == props.creatorId && auth.isLoggedIn && <Button danger onClick={showDeleteWarningHandler}>DELETE</Button>}
           </div>
         </Card>
       </li>

@@ -29,6 +29,14 @@ const UpdatePlace = () => {
       description: {
         value: '',
         isValid: false
+      },
+      tags: {
+        value: '',
+        isValid: false
+      },
+      bannedKeyWords: {
+        value: '',
+        isValid: false
       }
     },
     false
@@ -36,8 +44,8 @@ const UpdatePlace = () => {
 
   useEffect(() => {
     const fetchPlace = async () => {
-      try { 
-        const response = await sendRequest(`http://localhost:5000/api/places/${placeId}`) 
+      try {
+        const response = await sendRequest(`http://localhost:5000/api/places/${placeId}`)
         setLoadedPlace(response.place)
         if (response.place) {
           setFormData(
@@ -48,6 +56,14 @@ const UpdatePlace = () => {
               },
               description: {
                 value: response.place.description,
+                isValid: true
+              },
+              tags: {
+                value: response.place.tags,
+                isValid: true
+              },
+              bannedKeyWords: {
+                value: response.place.bannedKeyWords,
                 isValid: true
               }
             },
@@ -63,13 +79,16 @@ const UpdatePlace = () => {
 
   const placeUpdateSubmitHandler = async event => {
     event.preventDefault();
-    try{
-      await sendRequest(`http://localhost:5000/api/places/${placeId}`, 'PATCH', 
-    JSON.stringify({
-      title: formState.inputs.title.value,
-      description: formState.inputs.description.value
-    }), 
-    { 'Content-Type': 'application/json' })}catch{
+    try {
+      await sendRequest(`http://localhost:5000/api/places/${placeId}`, 'PATCH',
+        JSON.stringify({
+          title: formState.inputs.title.value,
+          description: formState.inputs.description.value,
+          tags: formState.inputs.tags.value,
+          bannedKeyWords: formState.inputs.bannedKeyWords.value
+        }),
+        { 'Content-Type': 'application/json' })
+    } catch {
     }
   };
 
@@ -94,32 +113,48 @@ const UpdatePlace = () => {
   return (
     <React.Fragment>
       <ErrorModal error={error} onClear={clearError}></ErrorModal>
-    {!isLoading && loadedPlace && <form className="place-form" onSubmit={placeUpdateSubmitHandler}>
-      <Input
-        id="title"
-        element="input"
-        type="text"
-        label="Title"
-        validators={[VALIDATOR_REQUIRE()]}
-        errorText="Please enter a valid title."
-        onInput={inputHandler}
-        initialValue={loadedPlace.title}
-        initialValid={true}
-      />
-      <Input
-        id="description"
-        element="textarea"
-        label="Description"
-        validators={[VALIDATOR_MINLENGTH(5)]}
-        errorText="Please enter a valid description (min. 5 characters)."
-        onInput={inputHandler}
-        initialValue={loadedPlace.description}
-        initialValid={true}
-      />
-      <Button type="submit" disabled={!formState.isValid}>
-        UPDATE PLACE
-      </Button>
-    </form>}
+      {!isLoading && loadedPlace && <form className="place-form" onSubmit={placeUpdateSubmitHandler}>
+        <Input
+          id="title"
+          element="input"
+          type="text"
+          label="Title"
+          validators={[VALIDATOR_REQUIRE()]}
+          errorText="Please enter a valid title."
+          onInput={inputHandler}
+          initialValue={loadedPlace.title}
+          initialValid={true}
+        />
+        <Input
+          id="description"
+          element="textarea"
+          label="Description"
+          validators={[VALIDATOR_MINLENGTH(5)]}
+          errorText="Please enter a valid description (min. 5 characters)."
+          onInput={inputHandler}
+          initialValue={loadedPlace.description}
+          initialValid={true}
+        />
+        <Input
+          id="tags"
+          element="textarea"
+          label="Tags"
+          validators={[VALIDATOR_REQUIRE()]}
+          errorText="Please enter a valid set of tags (with , s)."
+          onInput={inputHandler}
+        />
+        <Input
+          id="bannedKeyWords"
+          element="textarea"
+          label="Banned KeyWords"
+          validators={[VALIDATOR_REQUIRE()]}
+          errorText="Please enter a valid set of Banned KeyWords (with , s)."
+          onInput={inputHandler}
+        />
+        <Button type="submit" disabled={!formState.isValid}>
+          UPDATE PLACE
+        </Button>
+      </form>}
     </React.Fragment>
   );
 };

@@ -27,9 +27,13 @@ const NewPlace = () => {
         value: '',
         isValid: false
       },
-      address: {
+      tags: {
         value: '',
-        isValid: false
+        isValid: true
+      },
+      bannedKeyWords: {
+        value: '',
+        isValid: true
       }
     },
     false
@@ -37,12 +41,13 @@ const NewPlace = () => {
 
   const placeSubmitHandler = async event => {
     event.preventDefault();
-    // console.log(formState.inputs); // send this to the backend!
+    console.log(formState.inputs); // send this to the backend!
     try {
       await sendRequest('http://localhost:5000/api/places', 'POST', JSON.stringify({
         title: formState.inputs.title.value,
         description: formState.inputs.description.value,
-        address: formState.inputs.address.value,
+        tags: formState.inputs.tags.value,
+        bannedKeyWords: formState.inputs.bannedKeyWords.value,
         creator: auth.userId
       }), 
       {
@@ -75,11 +80,19 @@ const NewPlace = () => {
           onInput={inputHandler}
         />
         <Input
-          id="address"
-          element="input"
-          label="Address"
+          id="tags"
+          element="textarea"
+          label="Tags"
           validators={[VALIDATOR_REQUIRE()]}
-          errorText="Please enter a valid address."
+          errorText="Please enter a valid set of tags (with , s)."
+          onInput={inputHandler}
+        />
+        <Input
+          id="bannedKeyWords"
+          element="textarea"
+          label="Banned KeyWords"
+          validators={[VALIDATOR_REQUIRE()]}
+          errorText="Please enter a valid set of Banned KeyWords (with , s)."
           onInput={inputHandler}
         />
         <Button type="submit" disabled={!formState.isValid}>

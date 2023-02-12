@@ -29,6 +29,8 @@ const PlaceList = props => {
           address={place.address}
           creatorId={place.creator}
           coordinates={place.location}
+          tags={place.tags}
+          bannedKeyWords={place.bannedKeyWords}
         />
       ))}
     </ul>
