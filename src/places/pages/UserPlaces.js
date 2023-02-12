@@ -17,6 +17,10 @@ const UserPlaces = () => {
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
   const [searchPlace, setSearchPlace] = useState();
   const [searchTags, setSearchTags] = useState();
+  const [isAscending, setIsAscending] = useState(false);
+  const [isDescending, setIsDescending] = useState(false);
+  const [isFollowers, setIsFollowers] = useState(false);
+  const [isCreationDate, setIsCreationDate] = useState(false);
 
   const userId = useParams().userId;
 
@@ -46,6 +50,34 @@ const UserPlaces = () => {
     console.log(finalTags)
   }
 
+  const setAscending_confirm = () => {
+    setIsAscending(true)
+    setIsDescending(false)
+    setIsFollowers(false)
+    setIsCreationDate(false)
+  }
+
+  const setDescending_confirm = () => {
+    setIsAscending(false)
+    setIsDescending(true)
+    setIsFollowers(false)
+    setIsCreationDate(false)
+  }
+
+  const setFollowers_confirm = () => {
+    setIsAscending(false)
+    setIsDescending(false)
+    setIsFollowers(true)
+    setIsCreationDate(false)
+  }
+
+  const setCreationDate_confirm = () => {
+    setIsAscending(false)
+    setIsDescending(false)
+    setIsFollowers(false)
+    setIsCreationDate(true)
+  }
+
   // console.log()
 
   return <React.Fragment>
@@ -55,12 +87,17 @@ const UserPlaces = () => {
       value={searchPlace} onChange={searchPlaceHandler}
     ></input><Button type="submit">Search Name</Button></div>
     <div><input type="text" onChange={searchTagsHandler}></input><Button type="submit" onClick={setFinalTags_1}>Search Tags!!</Button></div>
-    <div className='InLine'><Button inverse>Ascending</Button>
-      <Button inverse>Followers</Button>
-      <Button inverse>Descending</Button>
-      <Button inverse>Creation Date</Button></div>
-    {!isLoading && loadedPlaces && <PlaceList items={loadedPlaces} searchVal={searchPlace} searchTags={finalTags}/>}
+    <div className='InLine'>
+      <Button inverse onClick={setAscending_confirm}>Ascending</Button>
+      <Button inverse onClick={setFollowers_confirm}>Followers</Button>
+      <Button inverse onClick={setDescending_confirm}>Descending</Button>
+      <Button inverse onClick={setCreationDate_confirm}>Creation Date</Button></div>
+    {!isLoading && loadedPlaces && <PlaceList items={loadedPlaces} searchVal={searchPlace} searchTags={finalTags}
+    isAscending={isAscending} isFollowers={isFollowers} isDescending={isDescending} isCreationDate={isCreationDate}
+    />}
   </React.Fragment>;
+
+// onClick={setIsAscending(true)}
 };
 
 export default UserPlaces;

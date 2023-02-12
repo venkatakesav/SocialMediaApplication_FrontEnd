@@ -37,8 +37,6 @@ const PlaceItem = props => {
     }
   }
 
-  const [isTag, setIsTag] = useState(false);
-
   return (
     <>
       {(!props.searchTags || props.tags.includes(props.searchTags)) &&(props.title == props.searchVal || !props.searchVal) && <React.Fragment>
@@ -75,6 +73,7 @@ const PlaceItem = props => {
               <h3>{props.address}</h3>
               <h3>Tags: {props.tags}</h3>
               <h3>Banned Words: {props.bannedKeyWords}</h3>
+              <h3>Creation Time: {props.creationTime}</h3>
               <p>{props.description}</p>
             </div>
             <div className="place-item__actions">

@@ -17,6 +17,11 @@ const PlaceList = props => {
     );
   }
 
+  {props.isAscending && props.items.sort((a, b) => (a.title > b.title) ? 1 : -1)}
+  {props.isDescending && props.items.sort((a, b) => (a.title > b.title) ? -1 : 1)}
+  {props.isCreationDate && props.items.sort((a, b) => (a.creation_date > b.creation_date) ? -1 : 1)}
+
+
   return (
     <ul className="place-list">
       {props.items.map(place => (
@@ -29,6 +34,7 @@ const PlaceList = props => {
           address={place.address}
           creatorId={place.creator}
           coordinates={place.location}
+          creationTime = {place.creation_date}
           tags={place.tags}
           bannedKeyWords={place.bannedKeyWords}
           searchVal = {props.searchVal}
