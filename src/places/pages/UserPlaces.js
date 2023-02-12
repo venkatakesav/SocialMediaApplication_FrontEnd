@@ -15,6 +15,7 @@ import './UserPlaces.css';
 const UserPlaces = () => {
   const [loadedPlaces, setLoadedPlaces] = useState();
   const { isLoading, error, sendRequest, clearError } = useHttpClient();
+  const [searchPlace, setSearchPlace] = useState();
 
   const userId = useParams().userId;
 
@@ -28,13 +29,20 @@ const UserPlaces = () => {
     }; fetchPlaces()
   }, [sendRequest, userId])
 
+  const searchPlaceHandler = event => {
+    setSearchPlace(event.target.value)
+    console.log(searchPlace)
+  }
+
   console.log()
 
   return <React.Fragment>
     <ErrorModal error={error} onClear={clearError} />
     {isLoading && <div className='center'><LoadingSpinner></LoadingSpinner></div>}
-    <input></input><Button type="submit">Search</Button>
-    {!isLoading && loadedPlaces && <PlaceList items={loadedPlaces} />}
+    <div><input type="text" 
+      value={searchPlace} onChange={searchPlaceHandler}
+    ></input><Button type="submit">Search</Button></div>
+    {!isLoading && loadedPlaces && <PlaceList items={loadedPlaces} searchVal={searchPlace}/>}
   </React.Fragment>;
 };
 

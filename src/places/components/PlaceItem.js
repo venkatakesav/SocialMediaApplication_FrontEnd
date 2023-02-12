@@ -38,52 +38,52 @@ const PlaceItem = props => {
   }
 
   return (
-    <React.Fragment>
-      <ErrorModal error={error} onClear={clearError} />
-      <Modal
-        show={showMap}
-        onCancel={closeMapHandler}
-        header={props.address}
-        contentClass="place-item__modal-content"
-        footerClass="place-item__modal-actions"
-        footer={<Button onClick={closeMapHandler}>CLOSE</Button>}
-      >
-        <div className="map-container">
-          <Map center={props.coordinates} zoom={16} />
-        </div>
-      </Modal>
-      <Modal show={showConfirm} onCancel={CancelDeleteWarningHandler} header="Are You Sure" footerClass="place-item__modal-actions"
-        footer={
-          <React.Fragment>
-            <Button inverse onClick={CancelDeleteWarningHandler}>Cancel</Button>
-            <Button danger onClick={confirmDeleteHandler}>Delete</Button>
-          </React.Fragment>
-        }>
-        <h2>Are you sure, you want to Delete?</h2>
-      </Modal>
-      <li className="place-item">
-        <Card className="place-item__content">
-          {isLoading && <LoadingSpinner asOverlay></LoadingSpinner>}
-          <div className="place-item__image">
-            <img src={props.image} alt={props.title} />
+    <>
+      {(props.title == props.searchVal || !props.searchVal) && <React.Fragment>
+        <ErrorModal error={error} onClear={clearError} />
+        <Modal
+          show={showMap}
+          onCancel={closeMapHandler}
+          header={props.address}
+          contentClass="place-item__modal-content"
+          footerClass="place-item__modal-actions"
+          footer={<Button onClick={closeMapHandler}>CLOSE</Button>}
+        >
+          <div className="map-container">
+            <Map center={props.coordinates} zoom={16} />
           </div>
-          <div className="place-item__info">
-            <h2>{props.title}</h2>
-            <h3>{props.address}</h3>
-            <h3>Tags: {props.tags}</h3>
-            <h3>Banned Words: {props.bannedKeyWords}</h3>
-            <p>{props.description}</p>
-          </div>
-          <div className="place-item__actions">
-            <Button inverse onClick={openMapHandler}>NAVIGATE TO SUBREDDIT PAGE</Button>
-            {console.log(auth.userId)}
-            {console.log(props.creator)}
-            {auth.userId == props.creatorId && auth.isLoggedIn && <Button to={`/places/${props.id}`}>EDIT</Button>}
-            {auth.userId == props.creatorId && auth.isLoggedIn && <Button danger onClick={showDeleteWarningHandler}>DELETE</Button>}
-          </div>
-        </Card>
-      </li>
-    </React.Fragment>
+        </Modal>
+        <Modal show={showConfirm} onCancel={CancelDeleteWarningHandler} header="Are You Sure" footerClass="place-item__modal-actions"
+          footer={
+            <React.Fragment>
+              <Button inverse onClick={CancelDeleteWarningHandler}>Cancel</Button>
+              <Button danger onClick={confirmDeleteHandler}>Delete</Button>
+            </React.Fragment>
+          }>
+          <h2>Are you sure, you want to Delete?</h2>
+        </Modal>
+        <li className="place-item">
+          <Card className="place-item__content">
+            {isLoading && <LoadingSpinner asOverlay></LoadingSpinner>}
+            <div className="place-item__image">
+              <img src={props.image} alt={props.title} />
+            </div>
+            <div className="place-item__info">
+              <h2>{props.title}</h2>
+              <h3>{props.address}</h3>
+              <h3>Tags: {props.tags}</h3>
+              <h3>Banned Words: {props.bannedKeyWords}</h3>
+              <p>{props.description}</p>
+            </div>
+            <div className="place-item__actions">
+              <Button inverse onClick={openMapHandler}>NAVIGATE TO SUBREDDIT PAGE</Button>
+              {auth.userId == props.creatorId && auth.isLoggedIn && <Button to={`/places/${props.id}`}>EDIT</Button>}
+              {auth.userId == props.creatorId && auth.isLoggedIn && <Button danger onClick={showDeleteWarningHandler}>DELETE</Button>}
+            </div>
+          </Card>
+        </li>
+      </React.Fragment>}
+    </>
   );
 };
 
