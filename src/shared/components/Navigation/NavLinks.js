@@ -12,23 +12,28 @@ const NavLinks = props => {
   // const nav_link_places = `/places/user/${u__id}`
 
   return <ul className="nav-links">
-    <li>
-      <NavLink to="/" exact>ALL USERS</NavLink>
-    </li>
+    {auth.isLoggedIn && (<li>
+      <NavLink to="/" exact>PROFILE</NavLink>
+    </li>)}
     {auth.isLoggedIn && (
       <li>
-        <NavLink to={`/${u__id}/places`} >MY PLACES</NavLink>
+        <NavLink to={`/${u__id}/places`} >MY SUBGREDDITS</NavLink>
       </li>)
     }
     {auth.isLoggedIn && (
       <li>
-        <NavLink to="/places/new">ADD PLACE</NavLink>
+        <NavLink to="/places/new">NEW SUBGREDDIT</NavLink>
       </li>)}
     {!auth.isLoggedIn && (
       <li>
         <NavLink to="/auth">AUTHENTICATE</NavLink>
       </li>
     )}
+    {/* {auth.isLoggedIn && (
+      <li>
+        <NavLink to={`/${u__id}/profile`} >MY PROFILE</NavLink>
+      </li>)
+    } */}
     {auth.isLoggedIn && (
       <li>
         <button onClick={auth.logout}>LOGOUT</button>

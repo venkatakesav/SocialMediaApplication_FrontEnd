@@ -13,6 +13,7 @@ import UserPlaces from './places/pages/UserPlaces';
 import UpdatePlace from './places/pages/UpdatePlace';
 import MainNavigation from './shared/components/Navigation/MainNavigation';
 import Auth from './user/pages/Auth';
+import Profile from './user/pages/Profile';
 import { useForm } from './shared/hooks/form-hook';
 import { AuthContext } from './shared/context/auth-context';
 
@@ -38,6 +39,7 @@ const App = () => {
       <Routes>
         <Route path="/" exact element={<Users/>}></Route>
         <Route path="/:userId/places" exact element={<UserPlaces/>}></Route>
+        <Route path="/:userId/profile" exact element={<Profile/>}></Route>
         <Route path="/places/new" exact element={<NewPlace/>}></Route>
         <Route path="/places/:placeId" exact element={<UpdatePlace/>}></Route>
         <Route path="/Auth" exact element={<Auth></Auth>}></Route>

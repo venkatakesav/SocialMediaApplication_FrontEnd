@@ -1,5 +1,5 @@
 .user-item {
-  margin: 1rem;
+  margin: 0.5rem;
   width: calc(45% - 2rem);
   min-width: 17.5rem;
 }
@@ -46,4 +46,27 @@
 
 .user-item__info h3 {
   margin: 0;
+}
+
+.user-item button {
+  margin-top: 1rem;
+  margin-left:0.5rem;
+}
+
+
+.place-item__modal-content {
+  padding: 0;
+}
+
+.place-item__modal-actions {
+  text-align: right;
+}
+
+p{
+  margin-left: 1rem;
+}
+
+div .Test{
+  display: flex;
+  justify-content: space-between;
 }
