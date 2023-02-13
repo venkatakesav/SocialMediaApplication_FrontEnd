@@ -34,6 +34,8 @@ const UserPlaces = () => {
     }; fetchPlaces()
   }, [sendRequest, userId])
 
+  {console.log(loadedPlaces)}
+
   const searchPlaceHandler = event => {
     setSearchPlace(event.target.value)
     console.log(searchPlace)
@@ -95,6 +97,7 @@ const UserPlaces = () => {
     {!isLoading && loadedPlaces && <PlaceList items={loadedPlaces} searchVal={searchPlace} searchTags={finalTags}
     isAscending={isAscending} isFollowers={isFollowers} isDescending={isDescending} isCreationDate={isCreationDate}
     />}
+    {console.log(`http://localhost:5000/api/places/users/${userId}`)}
   </React.Fragment>;
 
 // onClick={setIsAscending(true)}
