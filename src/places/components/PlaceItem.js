@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react';
 
+import { Link } from 'react-router-dom';
 import Card from '../../shared/components/UIElements/Card';
 import Button from '../../shared/components/FormElements/Button';
 import Modal from '../../shared/components/UIElements/Modal';
@@ -37,22 +38,22 @@ const PlaceItem = props => {
     }
   }
 
+  const joinSubredditHandler = async () => {
+    console.log("JOINING.......");
+    try {
+      await sendRequest(`http://localhost:5000/api/places/${props.id}`, 'PATCH', JSON.stringify({
+        userId: auth.userId
+      }),
+        { 'Content-Type': 'application/json' })
+    } catch (err) {
+      console.log("Error")
+    }
+  }
+
   return (
     <>
-      {(!props.searchTags || props.tags.includes(props.searchTags)) &&(props.title == props.searchVal || !props.searchVal) && <React.Fragment>
+      {(!props.searchTags || props.tags.includes(props.searchTags)) && (props.title == props.searchVal || !props.searchVal) && <React.Fragment>
         <ErrorModal error={error} onClear={clearError} />
-        <Modal
-          show={showMap}
-          onCancel={closeMapHandler}
-          header={props.address}
-          contentClass="place-item__modal-content"
-          footerClass="place-item__modal-actions"
-          footer={<Button onClick={closeMapHandler}>CLOSE</Button>}
-        >
-          <div className="map-container">
-            <Map center={props.coordinates} zoom={16} />
-          </div>
-        </Modal>
         <Modal show={showConfirm} onCancel={CancelDeleteWarningHandler} header="Are You Sure" footerClass="place-item__modal-actions"
           footer={
             <React.Fragment>
@@ -77,7 +78,8 @@ const PlaceItem = props => {
               <p>{props.description}</p>
             </div>
             <div className="place-item__actions">
-              <Button inverse onClick={openMapHandler}>NAVIGATE TO SUBREDDIT PAGE</Button>
+              <Button inverse to ={`/${props.id}/posts`}>NAVIGATE TO SUBREDDIT PAGE</Button>
+              {auth.userId != props.creatorId && auth.isLoggedIn && <Button onClick={joinSubredditHandler}>JOIN</Button>}
               {auth.userId == props.creatorId && auth.isLoggedIn && <Button to={`/places/${props.id}`}>EDIT</Button>}
               {auth.userId == props.creatorId && auth.isLoggedIn && <Button danger onClick={showDeleteWarningHandler}>DELETE</Button>}
             </div>

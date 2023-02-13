@@ -17,7 +17,12 @@ const NavLinks = props => {
     </li>)}
     {auth.isLoggedIn && (
       <li>
-        <NavLink to={`/${u__id}/places`} >MY SUBGREDDITS</NavLink>
+        <NavLink to={`/${u__id}/places`} >ALL SUBGREDDITS</NavLink>
+      </li>)
+    }
+    {auth.isLoggedIn && (
+      <li>
+        <NavLink to={`/${u__id}/places/my`} >MY SUBGREDDITS</NavLink>
       </li>)
     }
     {auth.isLoggedIn && (
